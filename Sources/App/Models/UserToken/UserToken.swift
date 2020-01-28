@@ -48,7 +48,5 @@ extension UserToken: ModelUserToken {
     static let valueKey = \UserToken.$value
     static let userKey = \UserToken.$user
 
-    var isValid: Bool {
-        true
-    }
+    var isValid: Bool { true }
 }

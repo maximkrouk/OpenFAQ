@@ -52,7 +52,7 @@ final class User: Model, Content {
 extension User: MigrationProvider {
     static func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(Self.schema)
-            .field("id", .uuid, .identifier(auto: true))
+            .field("id", .uuid, .identifier(auto: false))
             .field("first_name", .string, .required)
             .field("last_name", .string, .required)
             .field("email", .string, .required)
