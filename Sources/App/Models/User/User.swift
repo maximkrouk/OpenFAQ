@@ -32,13 +32,12 @@ final class User: Model, Content {
     init() { }
 
     init(id: UUID? = nil, firstName: String, lastName: String,
-         email: String, passwordHash: String, projects: [Project]) {
+         email: String, passwordHash: String) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
         self.passwordHash = passwordHash
-        self.projects = projects
     }
     
     func generateToken() throws -> UserToken {
@@ -55,32 +54,13 @@ extension User: MigrationProvider {
             .field("id", .uuid, .identifier(auto: false))
             .field("first_name", .string, .required)
             .field("last_name", .string, .required)
-            .field("email", .string, .required)
+            .field("email", .string, .required).unique(on: "email")
             .field("password_hash", .string, .required)
             .create()
     }
     
     static func revert(on database: Database) -> EventLoopFuture<Void> {
         database.schema(Self.schema).delete()
-    }
-}
-
-extension User {
-    struct Create: Content {
-        var firstName: String
-        var lastName: String
-        var email: String
-        var password: String
-        var confirmPassword: String
-    }
-}
-
-extension User.Create: Validatable {
-    static func validations(_ validations: inout Validations) {
-        validations.add("firstName", as: String.self, is: !.empty)
-        validations.add("lastName", as: String.self, is: !.empty)
-        validations.add("email", as: String.self, is: .email)
-        validations.add("password", as: String.self, is: .count(8...))
     }
 }
 

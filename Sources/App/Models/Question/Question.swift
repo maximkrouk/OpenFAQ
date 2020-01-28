@@ -9,7 +9,7 @@ import Fluent
 import Vapor
 
 final class Question: Model, Content {
-    static let schema = "users"
+    static let schema = "questions"
     
     @ID(key: "id")
     var id: Int?
@@ -40,11 +40,11 @@ final class Question: Model, Content {
 extension Question: MigrationProvider {
     static func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(Self.schema)
-            .field("id", .uuid, .identifier(auto: true))
+            .field("id", .int, .identifier(auto: true))
             .field("title", .string, .required)
             .field("body", .string, .required)
             .field("answer", .string, .required)
-            .field("project_id", .uuid, .references("projects", "id"))
+            .field("project_id", .string, .references("projects", "id"))
             .create()
     }
     

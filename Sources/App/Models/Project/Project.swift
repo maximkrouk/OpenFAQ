@@ -28,22 +28,21 @@ final class Project: Model, Content {
 
     init() { }
 
-    init(id: String? = nil, title: String, description: String, owner: User, questions: [Question]) {
+    init(id: String? = nil, title: String, description: String, ownerId: UUID) {
         self.id = id
         self.title = title
         self.description = description
-        self.owner = owner
-        self.questions = questions
+        self.$owner.id = ownerId
     }
 }
 
 extension Project: MigrationProvider {
     static func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(Self.schema)
-            .field("id", .uuid, .identifier(auto: true))
+            .field("id", .string, .identifier(auto: false))
             .field("title", .string, .required)
             .field("description", .string, .required)
-            .field("owner_id", .uuid, .references("projects", "id"))
+            .field("owner_id", .uuid, .references("users", "id"))
             .create()
     }
     

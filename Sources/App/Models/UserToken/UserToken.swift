@@ -33,9 +33,8 @@ extension UserToken: MigrationProvider {
     static func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(Self.schema)
             .field("id", .int, .identifier(auto: true))
-            .field("value", .string, .required)
-            .field("user_id", .int, .required, .references("users", "id"))
-            .unique(on: "value")
+            .field("value", .string, .required).unique(on: "value")
+            .field("user_id", .uuid, .required, .references("users", "id"))
             .create()
     }
 
