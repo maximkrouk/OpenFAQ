@@ -7,7 +7,7 @@
 
 import Fluent
 
-private struct _Migration: Migration {
+private struct _Migration<T>: Migration {
     var preparation: (Database) -> EventLoopFuture<Void>
     var revertion: (Database) -> EventLoopFuture<Void>
     func prepare(on database: Database) -> EventLoopFuture<Void> { preparation(database) }
@@ -21,6 +21,6 @@ protocol MigrationProvider {
 
 extension MigrationProvider {
     static var migration: Migration {
-        _Migration(preparation: prepare(on:), revertion: revert(on:))
+        _Migration<Self>(preparation: prepare, revertion: revert)
     }
 }
