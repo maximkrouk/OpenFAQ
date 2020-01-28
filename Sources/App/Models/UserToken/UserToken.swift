@@ -29,9 +29,9 @@ final class UserToken: Model, Content {
     }
 }
 
-extension UserToken: Migration {
-    func prepare(on database: Database) -> EventLoopFuture<Void> {
-        database.schema("user_tokens")
+extension UserToken: MigrationProvider {
+    static func prepare(on database: Database) -> EventLoopFuture<Void> {
+        database.schema(Self.schema)
             .field("id", .int, .identifier(auto: true))
             .field("value", .string, .required)
             .field("user_id", .int, .required, .references("users", "id"))
@@ -39,8 +39,8 @@ extension UserToken: Migration {
             .create()
     }
 
-    func revert(on database: Database) -> EventLoopFuture<Void> {
-        database.schema("user_tokens").delete()
+    static func revert(on database: Database) -> EventLoopFuture<Void> {
+        database.schema(Self.schema).delete()
     }
 }
 

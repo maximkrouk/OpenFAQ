@@ -49,8 +49,8 @@ final class User: Model, Content {
     }
 }
 
-extension User: Migration {
-    func prepare(on database: Database) -> EventLoopFuture<Void> {
+extension User: MigrationProvider {
+    static func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(Self.schema)
             .field("id", .uuid, .identifier(auto: true))
             .field("first_name", .string, .required)
@@ -60,7 +60,7 @@ extension User: Migration {
             .create()
     }
     
-    func revert(on database: Database) -> EventLoopFuture<Void> {
+    static func revert(on database: Database) -> EventLoopFuture<Void> {
         database.schema(Self.schema).delete()
     }
 }

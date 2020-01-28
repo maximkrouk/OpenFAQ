@@ -37,8 +37,8 @@ final class Project: Model, Content {
     }
 }
 
-extension Project: Migration {
-    func prepare(on database: Database) -> EventLoopFuture<Void> {
+extension Project: MigrationProvider {
+    static func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(Self.schema)
             .field("id", .uuid, .identifier(auto: true))
             .field("title", .string, .required)
@@ -47,7 +47,7 @@ extension Project: Migration {
             .create()
     }
     
-    func revert(on database: Database) -> EventLoopFuture<Void> {
+    static func revert(on database: Database) -> EventLoopFuture<Void> {
         database.schema(Self.schema).delete()
     }
 }
