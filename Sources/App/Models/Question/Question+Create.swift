@@ -12,6 +12,5 @@ extension Question {
         var title: String
         var body: String
         var answer: String
-        var projectId: String
     }
 }

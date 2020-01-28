@@ -13,10 +13,10 @@ extension Question {
         var title: String
         var body: String
         var answer: String
-        var projectId: String
+        var projectID: String
     }
     var output: Output {
         .init(id: id, title: title, body: body,
-              answer: answer, projectId: $project.id)
+              answer: answer, projectID: $project.id)
     }
 }

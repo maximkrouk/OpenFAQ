@@ -28,11 +28,11 @@ final class Project: Model, Content {
 
     init() { }
 
-    init(id: String? = nil, title: String, description: String, ownerId: UUID) {
+    init(id: String? = nil, title: String, description: String, ownerID: UUID) {
         self.id = id
         self.title = title
         self.description = description
-        self.$owner.id = ownerId
+        self.$owner.id = ownerID
     }
 }
 

@@ -28,12 +28,12 @@ final class Question: Model, Content {
 
     init() { }
 
-    init(id: Int? = nil, title: String, body: String, answer: String, project: Project) {
+    init(id: Int? = nil, title: String, body: String, answer: String, projectID: String) {
         self.id = id
         self.title = title
         self.body = body
         self.answer = answer
-        self.project = project
+        self.$project.id = projectID
     }
 }
 

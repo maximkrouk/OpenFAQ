@@ -9,9 +9,9 @@ import Vapor
 
 extension UserToken {
     struct Output: Content {
-        var userId: UUID?
+        var userID: UUID?
         var value: String
     }
     
-    var output: Output { .init(userId: $user.id, value: value) }
+    var output: Output { .init(userID: $user.id, value: value) }
 }
