@@ -7,4 +7,5 @@ func routes(_ app: Application) throws {
     
     try UsersController().routes(app)
     try ProjectsController().routes(app)
+    try QuestionsController().routes(app)
 }
